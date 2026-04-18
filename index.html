@@ -42,7 +42,7 @@
 </head>
 <body>
     <h1>Privacy Policy</h1>
-    <p class="updated">Last updated: April 13, 2025</p>
+    <p class="updated">Last updated: April 18, 2026</p>
 
     <p class="summary">
         Spool Scanner does not collect, transmit, or share any personal data. All data stays on your device.
@@ -71,12 +71,17 @@
     <p>This data never leaves your device unless you explicitly choose to export it (JSON or CSV) or share it using Android's share functionality.</p>
 
     <h2>NFC Usage</h2>
-    <p>The App uses your device's NFC (Near Field Communication) hardware solely to read data from filament spool RFID tags. The App:</p>
+    <p>The App uses your device's NFC (Near Field Communication) hardware to read and, optionally, to write filament spool tags. The App:</p>
     <ul>
-        <li>Only reads NFC tags when you initiate a scan</li>
-        <li>Does not write to or modify Bambu Lab RFID tags</li>
-        <li>Does not transmit NFC data to any server</li>
-        <li>Does not read NFC tags in the background</li>
+        <li>Only accesses NFC when you initiate a scan or a write &mdash; never in the background.</li>
+        <li><strong>Reads</strong> two kinds of tags:
+            <ul>
+                <li>Bambu Lab filament spool RFID tags (encrypted MIFARE Classic format).</li>
+                <li>NDEF tags (e.g. NTAG213 / NTAG215 / NTAG216) previously written by this app or another compatible tool.</li>
+            </ul>
+        </li>
+        <li><strong>Writes</strong>, only when you explicitly tap the &ldquo;Write tag&rdquo; button, to blank or rewritable NDEF tags. The data written consists solely of the filament details you have entered in the app (brand, material, color, weight, diameter, temperatures, optional notes, and an app-generated per-spool identifier). Bambu Lab tags are never written to or modified.</li>
+        <li>Does not transmit any NFC tag data to any server &mdash; all NFC interaction is purely between your phone and the tag in front of it.</li>
     </ul>
 
     <h2>Android Backup</h2>
@@ -92,7 +97,8 @@
     <p>The App is not directed at children under 13 and does not knowingly collect data from children.</p>
 
     <h2>Changes to This Policy</h2>
-    <p>We may update this privacy policy from time to time. Any changes will be reflected in the "Last updated" date above.</p>
+    <p>We may update this privacy policy from time to time. Any changes will be reflected in the &ldquo;Last updated&rdquo; date above.</p>
+    <p><strong>April 18, 2026</strong> &mdash; NFC Usage section expanded to describe write support for blank / rewritable NDEF tags added in this release. No change to data-collection behaviour; no data still leaves the device.</p>
 
     <h2>Contact</h2>
     <p>If you have questions about this privacy policy, please contact:</p>
