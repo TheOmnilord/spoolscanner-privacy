@@ -49,7 +49,7 @@
 </head>
 <body>
     <h1>Privacy Policy</h1>
-    <p class="updated">Last updated: April 27, 2026</p>
+    <p class="updated">Last updated: September 25, 2026</p>
 
     <p class="summary">
         <strong>In short:</strong> Your scan history, notes, prices, and any data tied to physical spools stay on your device. The App also collects anonymous, aggregated usage counters (e.g. how many scans, how often features are used) and uploads them to the developer's server about once a day so the developer can see which features are popular. <strong>No personal information, scan contents, or NFC tag data is ever uploaded.</strong> You can turn the upload off in Settings; local statistics still work for your own &ldquo;Your stats&rdquo; page.
@@ -68,7 +68,7 @@
     <p>This data never leaves your device unless you explicitly choose to export it (JSON or CSV) or share an exported file using Android's share functionality.</p>
 
     <h2>Anonymous Usage Data (Opt-Out)</h2>
-    <p>To help the developer understand which features are used and which need work, the App collects anonymous, aggregated counters and uploads them to the developer's server about once every 24 hours. <strong>This is on by default.</strong> You can turn it off at any time in <strong>Settings &rarr; Anonymous usage &rarr; &ldquo;Share anonymous usage with the developer&rdquo;</strong>.</p>
+    <p>To help the developer understand which features are used and which need work, the App collects anonymous, aggregated counters and uploads them to the developer's server about once every 24 hours, and once more when you leave the App after your first session in which you used it. <strong>This is on by default.</strong> You can turn it off at any time in <strong>Settings &rarr; Anonymous usage &rarr; &ldquo;Share anonymous usage with the developer&rdquo;</strong>.</p>
 
     <h3>What is uploaded</h3>
     <ul>
@@ -92,7 +92,7 @@
     </ul>
 
     <h3>Where it goes</h3>
-    <p>Uploads are sent to a Cloudflare Workers endpoint operated by the developer (<code>spoolscan-telemetry.spoolscan.workers.dev</code>). Cloudflare receives the request as part of its content-delivery infrastructure but the developer's Worker code does <strong>not</strong> log your IP address and does <strong>not</strong> persist any HTTP request metadata beyond the anonymous payload itself. Data is stored in a Cloudflare D1 database keyed by the anonymous device key described above. Each upload <strong>replaces</strong> the previous record for that device key, so totals do not double-count.</p>
+    <p>Uploads are sent to a Cloudflare Workers endpoint operated by the developer (<code>spoolscan-telemetry.spoolscan.workers.dev</code>). Cloudflare receives the request as part of its content-delivery infrastructure but the developer's Worker code does <strong>not</strong> log your IP address and does <strong>not</strong> persist any HTTP request metadata beyond the anonymous payload itself. Data is stored in a Cloudflare D1 database keyed by the anonymous device key described above. Each upload <strong>replaces</strong> the previous record for that device key, so totals do not double-count. Alongside it the server keeps only when that device key first uploaded and how many uploads it has sent, so usage can be grouped by when installs started.</p>
 
     <h3>Your control</h3>
     <ul>
@@ -107,13 +107,22 @@
     <p>The App uses your device's NFC (Near Field Communication) hardware to read and, optionally, to write filament spool tags. The App:</p>
     <ul>
         <li>Only accesses NFC when you initiate a scan or a write &mdash; never in the background.</li>
-        <li><strong>Reads</strong> two kinds of tags:
+        <li><strong>Reads</strong> these kinds of tags:
             <ul>
                 <li>Bambu Lab filament spool RFID tags (encrypted MIFARE Classic format).</li>
+                <li>Creality Hyper-series filament spool RFID tags (MIFARE Classic format).</li>
+                <li>Prusa OpenPrintTag spool tags (NFC-V / ISO 15693, or NDEF stickers).</li>
+                <li>OpenSpool stickers (an open NDEF format read by some printers&rsquo; filament readers).</li>
                 <li>NDEF tags (e.g. NTAG213 / NTAG215 / NTAG216) previously written by this App or another compatible tool.</li>
             </ul>
         </li>
-        <li><strong>Writes</strong>, only when you explicitly tap the &ldquo;Write tag&rdquo; button, to blank or rewritable NDEF tags. The data written consists solely of the filament details you have entered in the App (brand, material, color, weight, diameter, temperatures, optional notes, and an app-generated per-spool identifier). Bambu Lab tags are never written to or modified.</li>
+        <li><strong>Writes</strong>, only when you explicitly choose to:
+            <ul>
+                <li>to blank or rewritable NDEF tags (&ldquo;Write tag&rdquo;). The data written consists solely of the filament details you have entered in the App (brand, material, color, weight, diameter, temperatures, optional notes, and an app-generated per-spool identifier), plus, when it fits, a standard Android record naming this App so that tapping the sticker opens it;</li>
+                <li>to an OpenPrintTag spool's usage field, when you record usage with tag writing turned on &mdash; only the amount of filament used is updated, nothing else on the tag.</li>
+            </ul>
+        </li>
+        <li>Bambu Lab and Creality tags are never written to or modified, and OpenSpool stickers are never overwritten.</li>
         <li>Does not transmit any NFC tag data, UIDs, or payload contents to any server &mdash; all NFC interaction is purely between your phone and the tag in front of it.</li>
     </ul>
 
@@ -135,16 +144,18 @@
     <h2>Data Sharing</h2>
     <p>The App does not sell, rent, or share your personal data with any third parties. The anonymous-usage uploads described above are processed only by the developer to inform App development and are not shared with advertisers or data brokers.</p>
     <p>You can manually export your scan history as JSON or CSV files using the in-app export function. Any sharing of exported files is initiated and controlled entirely by you.</p>
+    <p>If you turn on <strong>automatic backup</strong> (Settings → Backup &amp; Restore), the App keeps a JSON backup up to date in a file you choose, for example in a folder on your phone or a cloud storage app you use. The App writes only to that one file, only while you keep the feature on, and never sends it anywhere else; the storage location you picked handles it under its own terms.</p>
 
     <h2 id="data-deletion">Deleting Your Data</h2>
-    <p>Spool Scanner is built so you control your own data. Here is how to delete it.</p>
+    <p>Spool Scanner is built so you control your own data. Here is how to delete it. In the App, <strong>Settings &rarr; About &rarr; &ldquo;Delete my data&rdquo;</strong> gathers all of these options in one place.</p>
 
     <h3>Delete data stored on your device</h3>
     <p>Everything tied to your spools (scan history, notes, prices, settings, backup file) is stored only on your device. To remove it:</p>
     <ul>
-        <li><strong>Delete a single spool:</strong> open the History tab, tap a row to open the detail popup, tap &ldquo;Delete.&rdquo;</li>
-        <li><strong>Delete all scan history:</strong> Settings &rarr; scroll to the bottom &rarr; &ldquo;Delete all history.&rdquo; This wipes the main history file <em>and</em> the auto-backup file.</li>
+        <li><strong>Delete a single spool:</strong> open the Spools tab, tap a spool to open the detail popup, tap &ldquo;Delete.&rdquo;</li>
+        <li><strong>Delete all scan history:</strong> Spools tab &rarr; All &rarr; &ldquo;&#10005; Delete all.&rdquo; This wipes the main history file <em>and</em> the auto-backup file.</li>
         <li><strong>Delete everything (history, settings, anonymous-usage counters, device key):</strong> uninstall the App in Android Settings &rarr; Apps &rarr; Spool Scanner &rarr; Uninstall. This is the most thorough option &mdash; it removes the App's private data directory and all preferences.</li>
+        <li><strong>Automatic backup file:</strong> if you turned automatic backup on, the file you chose is yours and is not removed when you uninstall the App. Stop automatic backup in Settings and delete the file where you saved it.</li>
         <li><strong>Reset only the anonymous-usage counters</strong> (without uninstalling): Settings &rarr; Anonymous usage &rarr; &ldquo;&#10005; Reset.&rdquo;</li>
     </ul>
 
@@ -165,6 +176,7 @@
 
     <h2>Changes to This Policy</h2>
     <p>We may update this privacy policy from time to time. Any changes will be reflected in the &ldquo;Last updated&rdquo; date above.</p>
+    <p><strong>September 25, 2026</strong> &mdash; The App now links to this policy and to &ldquo;Delete my data&rdquo; from Settings &rarr; About. Anonymous usage also uploads once after your first active session, and the server keeps each device key's first-upload date and upload count. NFC section updated for Creality and OpenPrintTag tags (reading) and OpenPrintTag usage updates (writing). Corrected where to find &ldquo;Delete all&rdquo; (the Spools tab, formerly History). Added optional automatic backup to a file you choose, and NFC reading of OpenSpool stickers.</p>
     <p><strong>April 27, 2026</strong> &mdash; Added the &ldquo;Anonymous Usage Data&rdquo; section documenting the opt-out feature-counter upload introduced in app version 1.3 (build 65). Added a &ldquo;Deleting Your Data&rdquo; section with self-service and direct-deletion-request paths. Added a one-time-purchase section. Updated &ldquo;Third-Party Services&rdquo; to list Cloudflare Workers, Google ML Kit, and Google Play Billing.</p>
     <p><strong>April 18, 2026</strong> &mdash; NFC Usage section expanded to describe write support for blank / rewritable NDEF tags.</p>
 
