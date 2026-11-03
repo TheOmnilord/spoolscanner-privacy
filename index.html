@@ -49,10 +49,10 @@
 </head>
 <body>
     <h1>Privacy Policy</h1>
-    <p class="updated">Last updated: September 25, 2026</p>
+    <p class="updated">Last updated: October 11, 2026</p>
 
     <p class="summary">
-        <strong>In short:</strong> Your scan history, notes, prices, and any data tied to physical spools stay on your device. The App also collects anonymous, aggregated usage counters (e.g. how many scans, how often features are used) and uploads them to the developer's server about once a day so the developer can see which features are popular. <strong>No personal information, scan contents, or NFC tag data is ever uploaded.</strong> You can turn the upload off in Settings; local statistics still work for your own &ldquo;Your stats&rdquo; page.
+        <strong>In short:</strong> Your scan history, notes, prices, and any data tied to physical spools stay on your device. The App also collects anonymous, aggregated usage counters (e.g. how many scans, how often features are used) and uploads them to the developer's server about once a day so the developer can see which features are popular. They include how many spools you have per catalog brand and material family, which multi-material unit types you have set up, and the material codes of Creality spools the App can't identify yet. <strong>No personal information, no individual spools, notes or prices, and no other NFC tag data are ever uploaded.</strong> You can turn the upload off in Settings; local statistics still work for your own &ldquo;Your stats&rdquo; page.
     </p>
 
     <h2>Overview</h2>
@@ -68,22 +68,25 @@
     <p>This data never leaves your device unless you explicitly choose to export it (JSON or CSV) or share an exported file using Android's share functionality.</p>
 
     <h2>Anonymous Usage Data (Opt-Out)</h2>
-    <p>To help the developer understand which features are used and which need work, the App collects anonymous, aggregated counters and uploads them to the developer's server about once every 24 hours, and once more when you leave the App after your first session in which you used it. <strong>This is on by default.</strong> You can turn it off at any time in <strong>Settings &rarr; Anonymous usage &rarr; &ldquo;Share anonymous usage with the developer&rdquo;</strong>.</p>
+    <p>To help the developer understand which features are used and which need work, the App collects anonymous, aggregated counters and uploads them to the developer's server about once every 24 hours, once more when you leave the App after your first session in which you used it, and right after Spool Scanner Pro is unlocked, restored or removed on your device, or a payment for it is pending (so that is counted the same day). <strong>This is on by default.</strong> You can turn it off at any time in <strong>Settings &rarr; Anonymous usage &rarr; &ldquo;Share anonymous usage with the developer&rdquo;</strong>.</p>
 
     <h3>What is uploaded</h3>
     <ul>
-        <li><strong>Feature counters.</strong> How many times features are used in aggregate &mdash; for example: number of scans (Bambu / NDEF / unrecognized), number of tag writes (success / failed / too small), number of &ldquo;Update usage&rdquo; confirmations, number of history edits, number of upsell screens shown vs. purchases. These are simple incrementing integers &mdash; they do not include <em>what</em> was scanned, written, or edited.</li>
+        <li><strong>Feature counters.</strong> How many times features are used in aggregate &mdash; for example: number of scans (Bambu / NDEF / unrecognized), number of tag writes (success / failed / too small), number of &ldquo;Update usage&rdquo; confirmations, number of history edits, number of upsell screens shown, Unlock taps and how they ended (bought, cancelled, payment pending, failed), and how Pro came on for this install (bought, restored, or found on your Google account). These are simple incrementing integers &mdash; they do not include <em>what</em> was scanned, written, or edited.</li>
         <li><strong>Anonymous device key.</strong> A random identifier (UUID-style GUID) generated on first upload. It is not derived from your phone's hardware identifiers, your account, your IP address, or anything else that identifies you. Its only purpose is to let the server replace your previous upload with your latest one (so the same device is not double-counted in totals). When you turn off sharing, this key is <strong>deleted</strong>; if you turn it back on later, a new random key is generated, with no link to the previous one.</li>
         <li><strong>App version, schema version, platform name</strong> (e.g. <code>"Android"</code>).</li>
         <li><strong>User-typed brand names that are not in the App's catalog</strong> (e.g. if you type &ldquo;MyLocal3DShop&rdquo; as a brand name, the lowercased text is uploaded as a counter so the developer can see which brands to consider adding). Names are sanitized (lowercased, length-capped, single-character entries dropped) and uploaded as counts of typed strings &mdash; not associated with any other data point. If you do not want this, turn off sharing.</li>
         <li><strong>Names of catalog brands a free user typed without unlocking.</strong> Same shape as above &mdash; used to gauge which brands free users most want access to.</li>
+        <li><strong>What your spool list is made of, as counts.</strong> At each upload the App counts the spools you have on hand (archived and sample spools left out): how many per catalog brand (only brand names from the App's catalog; other brand names are never sent this way) and how many per material family from a fixed list (PLA, PETG, ABS, TPU and so on, with everything else counted as &ldquo;other&rdquo;). Never individual spools, colors, weights, prices, notes or where a spool is stored.</li>
+        <li><strong>Which multi-material units you have set up, as counts.</strong> How many of each unit type from the App's own list (for example &ldquo;Bambu Lab AMS&rdquo;: 2), never the names or slots you gave them. If you tap &ldquo;My unit isn't listed&rdquo; in Locations, only that tap is counted; nothing you type is sent.</li>
+        <li><strong>Codes of Creality spools the App can't identify yet.</strong> When a Creality spool's tag carries a material code the App doesn't know, that factory code (the six-digit number Creality uses for that material, for example &ldquo;102001&rdquo;) is counted per spool, so the developer can add the material. Nothing else from the tag is sent.</li>
         <li><strong>Last upload timestamp.</strong></li>
     </ul>
 
     <h3>What is NOT uploaded</h3>
     <ul>
-        <li>Scan history contents (materials, colors, weights, prices, notes)</li>
-        <li>NFC tag data (UIDs, payloads, MIFARE bytes)</li>
+        <li>Your spool list itself (individual spools, colors, weights, prices, notes, storage locations) &mdash; only the counts described above</li>
+        <li>NFC tag data (UIDs, payloads, MIFARE bytes) &mdash; apart from the unknown Creality material code described above</li>
         <li>Photos taken with the label-scan camera (these are processed entirely on-device by Google ML Kit and never uploaded by this App)</li>
         <li>Location data</li>
         <li>Personal information (name, email, phone, address)</li>
@@ -92,14 +95,14 @@
     </ul>
 
     <h3>Where it goes</h3>
-    <p>Uploads are sent to a Cloudflare Workers endpoint operated by the developer (<code>spoolscan-telemetry.spoolscan.workers.dev</code>). Cloudflare receives the request as part of its content-delivery infrastructure but the developer's Worker code does <strong>not</strong> log your IP address and does <strong>not</strong> persist any HTTP request metadata beyond the anonymous payload itself. Data is stored in a Cloudflare D1 database keyed by the anonymous device key described above. Each upload <strong>replaces</strong> the previous record for that device key, so totals do not double-count. Alongside it the server keeps only when that device key first uploaded and how many uploads it has sent, so usage can be grouped by when installs started.</p>
+    <p>Uploads are sent to a Cloudflare Workers endpoint operated by the developer (<code>spoolscan-telemetry.spoolscan.workers.dev</code>). Cloudflare receives the request as part of its content-delivery infrastructure but the developer's Worker code does <strong>not</strong> log your IP address and does <strong>not</strong> persist any HTTP request metadata beyond the anonymous payload itself. Data is stored in a Cloudflare D1 database keyed by the anonymous device key described above. Each upload <strong>replaces</strong> the previous record for that device key, so totals do not double-count. Alongside it the server keeps only when that device key first uploaded, the App version of that first upload, how many uploads it has sent, and the highest value it has sent for each counter (so a delayed older upload is not counted twice), so usage can be grouped by when installs started. The server also adds how much each counter grew since that device's previous upload to daily totals per App version; those totals carry no device key.</p>
 
     <h3>Your control</h3>
     <ul>
         <li><strong>Turn it off at any time:</strong> Settings &rarr; Anonymous usage &rarr; uncheck &ldquo;Share anonymous usage with the developer.&rdquo; Turning it off deletes the anonymous device key and stops further uploads.</li>
-        <li><strong>See exactly what would be uploaded:</strong> Settings &rarr; Anonymous usage &rarr; &ldquo;&#128065; View collected data&rdquo; displays the live JSON snapshot &mdash; you can verify the contents, not just trust this policy.</li>
+        <li><strong>See what is collected:</strong> Settings &rarr; Anonymous usage &rarr; &ldquo;&#128065; View collected data&rdquo; displays the data as JSON: the counters since the App was installed, with the date each was first and last used, and the spool counts an upload adds. An upload sends less than this view shows: only how much each counter grew since your current device key was created (anything recorded before that, for example while sharing was off, stays on your phone; on a new install the first key covers everything from the start), and none of the dates. You can verify the contents, not just trust this policy.</li>
         <li><strong>Reset:</strong> Settings &rarr; Anonymous usage &rarr; &ldquo;&#10005; Reset&rdquo; clears all counters back to zero.</li>
-        <li><strong>Manual flush:</strong> Settings &rarr; Anonymous usage &rarr; &ldquo;&uarr; Send now&rdquo; forces an immediate upload.</li>
+        <li><strong>Manual flush:</strong> Settings &rarr; Anonymous usage &rarr; &ldquo;&uarr; Send now&rdquo; forces an immediate upload. It works only while sharing is on; with sharing off nothing is uploaded.</li>
     </ul>
     <p>Local feature counters that power the in-app <strong>&ldquo;Your stats&rdquo;</strong> page (Settings &rarr; Anonymous usage &rarr; &ldquo;&#128200; Your stats&rdquo;) are computed entirely on-device from your scan history and continue to work whether sharing is on or off.</p>
 
@@ -123,7 +126,7 @@
             </ul>
         </li>
         <li>Bambu Lab and Creality tags are never written to or modified, and OpenSpool stickers are never overwritten.</li>
-        <li>Does not transmit any NFC tag data, UIDs, or payload contents to any server &mdash; all NFC interaction is purely between your phone and the tag in front of it.</li>
+        <li>Does not transmit NFC tag data, UIDs, or payload contents to any server &mdash; all NFC interaction is purely between your phone and the tag in front of it. The one exception is the material code of a Creality spool the App can't identify yet, counted as described under &ldquo;Anonymous Usage Data&rdquo;.</li>
     </ul>
 
     <h2>In-App Purchase</h2>
@@ -161,11 +164,12 @@
 
     <h3>Delete the anonymous record on the developer's server</h3>
     <p>If you have ever had &ldquo;Share anonymous usage with the developer&rdquo; turned on, an anonymous row keyed by your random device key may exist in the developer's Cloudflare D1 database. The row contains only the data described in &ldquo;What is uploaded&rdquo; above &mdash; no personal information.</p>
-    <p>Two ways to remove it:</p>
+    <p>The row is kept until you ask for it to be deleted. Your device key is the only way to find it (there is nothing else in the upload that identifies you), and turning sharing off deletes that key from your phone, so ask <strong>before</strong> you turn sharing off:</p>
     <ol style="margin-left: 24px; margin-bottom: 16px;">
-        <li><strong>Self-service.</strong> Open Settings &rarr; Anonymous usage &rarr; uncheck &ldquo;Share anonymous usage with the developer.&rdquo; This stops further uploads and deletes the anonymous device key on your device. The existing server row will become orphaned (no further updates) and is purged in routine database cleanup.</li>
-        <li><strong>Direct deletion request.</strong> If you would like the existing server row removed immediately, email <a href="mailto:sveinungsvea@gmail.com?subject=Delete%20my%20Spool%20Scanner%20data">sveinungsvea@gmail.com</a> with the subject line <strong>&ldquo;Delete my Spool Scanner data.&rdquo;</strong> Optionally include your anonymous device key (Settings &rarr; Anonymous usage &rarr; &ldquo;&#128065; View collected data&rdquo; &rarr; copy the <code>deviceKey</code> value) so the row can be located precisely. Without the key the row cannot be located, since there is nothing else in the upload that identifies you. The developer will delete the matching row within <strong>30 days</strong> and reply to confirm.</li>
+        <li><strong>Ask for the deletion.</strong> In the App, open Settings &rarr; About &rarr; &ldquo;Delete my data&rdquo; &rarr; &ldquo;Ask to delete the usage record&rdquo;. This opens an email to <a href="mailto:sveinungsvea@gmail.com?subject=Delete%20my%20Spool%20Scanner%20data">sveinungsvea@gmail.com</a> with the subject <strong>&ldquo;Delete my Spool Scanner data&rdquo;</strong> and your device key already filled in. (Without the App, send that email yourself with the key, which Settings &rarr; Anonymous usage &rarr; &ldquo;&#128065; View collected data&rdquo; shows as <code>deviceKey</code>.) The developer will delete the matching row within <strong>30 days</strong> and reply to confirm.</li>
+        <li><strong>Turn sharing off.</strong> Settings &rarr; Anonymous usage &rarr; uncheck &ldquo;Share anonymous usage with the developer&rdquo; (the App offers this right after step 1). If sharing stays on, the next upload creates the row again under the same key. Turning sharing off on its own does not delete the server row: the row just stops receiving updates.</li>
     </ol>
+    <p>Deleting the row does not change the daily totals described in &ldquo;Where it goes&rdquo;: they hold no device key, so a device's earlier contributions to them cannot be found or taken out. They cannot be traced back to you either.</p>
     <p>Once your local device key is regenerated (after opting out and back in, or after uninstalling), past uploads can no longer be re-associated with you.</p>
 
     <h3>What about the in-app Pro purchase?</h3>
@@ -176,6 +180,7 @@
 
     <h2>Changes to This Policy</h2>
     <p>We may update this privacy policy from time to time. Any changes will be reflected in the &ldquo;Last updated&rdquo; date above.</p>
+    <p><strong>October 11, 2026</strong> &mdash; Anonymous usage also uploads right after Pro is unlocked, restored or removed (or a payment is pending), and counts Unlock taps and their outcome. The server keeps the App version of a device key's first upload and daily counter totals without device keys. Uploads now also carry counts of the spools on hand per catalog brand and material family, of the multi-material unit types you have set up, and of Creality material codes the App can't identify yet. Corrected the deletion section: server rows are kept until you ask for them to be deleted, and the daily totals can't be taken back out. Corrected what &ldquo;View collected data&rdquo; shows and when &ldquo;Send now&rdquo; works.</p>
     <p><strong>September 25, 2026</strong> &mdash; The App now links to this policy and to &ldquo;Delete my data&rdquo; from Settings &rarr; About. Anonymous usage also uploads once after your first active session, and the server keeps each device key's first-upload date and upload count. NFC section updated for Creality and OpenPrintTag tags (reading) and OpenPrintTag usage updates (writing). Corrected where to find &ldquo;Delete all&rdquo; (the Spools tab, formerly History). Added optional automatic backup to a file you choose, and NFC reading of OpenSpool stickers.</p>
     <p><strong>April 27, 2026</strong> &mdash; Added the &ldquo;Anonymous Usage Data&rdquo; section documenting the opt-out feature-counter upload introduced in app version 1.3 (build 65). Added a &ldquo;Deleting Your Data&rdquo; section with self-service and direct-deletion-request paths. Added a one-time-purchase section. Updated &ldquo;Third-Party Services&rdquo; to list Cloudflare Workers, Google ML Kit, and Google Play Billing.</p>
     <p><strong>April 18, 2026</strong> &mdash; NFC Usage section expanded to describe write support for blank / rewritable NDEF tags.</p>
